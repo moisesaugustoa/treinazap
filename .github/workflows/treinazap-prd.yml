@@ -12,12 +12,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12.21.0
+      - name: INSTALL AWS CLIENT
+        run: pip install awscli
       - name: INSTALL E BUILD
         run: npm install && npm run build
         env:
            CI: "false"
-      - name: LISTAR ARQUIVOS
-        run: ls -la build/*
+      - name: Deploy S3
+        run: cd build && AWS_ACCESS_KEY_ID=AKIAX6ZVK6VZTG2PACGA AWS_SECRET_ACCESS_KEY=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 aws s3 sync . s3://treinazapm --acl public-read --delete
        
       
 
